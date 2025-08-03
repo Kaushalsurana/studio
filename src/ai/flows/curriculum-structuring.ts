@@ -16,15 +16,18 @@ const CurriculumStructuringInputSchema = z.object({
 });
 export type CurriculumStructuringInput = z.infer<typeof CurriculumStructuringInputSchema>;
 
+const SubtopicSchema = z.object({
+  topic: z.string().describe('A main topic from the syllabus.'),
+  subtopics: z.array(z.string()).describe('An array of subtopics for the given main topic.'),
+});
+
 const CurriculumStructuringOutputSchema = z.object({
   topics: z
     .array(z.string())
-    .describe('An array of the main topics extracted from the syllabus.'),
+    .describe('An array of the main topics extracted from the syllabus, in a logical order.'),
   subtopics: z
-    .record(z.array(z.string()))
-    .describe(
-      'A record (map) of main topics to an array of subtopics extracted from the syllabus.'
-    ),
+    .array(SubtopicSchema)
+    .describe('A list of topics and their corresponding subtopics.'),
 });
 export type CurriculumStructuringOutput = z.infer<typeof CurriculumStructuringOutputSchema>;
 
@@ -42,8 +45,8 @@ You will receive the content of a science syllabus and extract the main topics a
 
 Syllabus Content: {{{syllabusText}}}
 
-Return the main topics as an array of strings.
-For each main topic, extract the subtopics and return them as a record where the key is the main topic and the value is an array of strings of subtopics.
+Return the main topics as an array of strings in a logical order.
+For each main topic, extract the subtopics and return them as an array of objects, where each object contains the main topic and a list of its subtopics.
 `,
 });
 

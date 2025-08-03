@@ -72,7 +72,7 @@ export default function Step1CurriculumStructure() {
                   <AccordionTrigger className="text-lg font-semibold">{topic}</AccordionTrigger>
                   <AccordionContent>
                     <ul className="list-disc pl-6 space-y-1 text-muted-foreground">
-                      {curriculum.subtopics[topic]?.map(subtopic => (
+                      {curriculum.subtopics.find(item => item.topic === topic)?.subtopics?.map(subtopic => (
                         <li key={subtopic}>{subtopic}</li>
                       )) ?? <li>No subtopics found.</li>}
                     </ul>
