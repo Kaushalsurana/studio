@@ -37,7 +37,7 @@ export default function Step1CurriculumStructure() {
     <div className="max-w-4xl mx-auto">
       <h1 className="text-4xl font-headline text-primary mb-2">Curriculum Structuring</h1>
       <p className="text-muted-foreground mb-8">
-        Paste your science syllabus below. Our AI will extract and organize the topics and subtopics for you.
+        Paste your science syllabus below. Our AI will extract and organize the chapters and subtopics for you.
       </p>
 
       <Card>
@@ -63,18 +63,18 @@ export default function Step1CurriculumStructure() {
         <Card className="mt-8">
           <CardHeader>
             <CardTitle>Extracted Curriculum</CardTitle>
-            <CardDescription>Review the topics and subtopics extracted from your syllabus.</CardDescription>
+            <CardDescription>Review the chapters and subtopics extracted from your syllabus.</CardDescription>
           </CardHeader>
           <CardContent>
-            <Accordion type="single" collapsible className="w-full">
-              {curriculum.topics.map((topic, index) => (
-                <AccordionItem value={`item-${index}`} key={topic}>
-                  <AccordionTrigger className="text-lg font-semibold">{topic}</AccordionTrigger>
+            <Accordion type="multiple" className="w-full">
+              {curriculum.chapters.map((chapter, index) => (
+                <AccordionItem value={`item-${index}`} key={chapter.chapter_title}>
+                  <AccordionTrigger className="text-lg font-semibold">{chapter.chapter_title}</AccordionTrigger>
                   <AccordionContent>
                     <ul className="list-disc pl-6 space-y-1 text-muted-foreground">
-                      {curriculum.subtopics.find(item => item.topic === topic)?.subtopics?.map(subtopic => (
+                      {chapter.subtopics.map(subtopic => (
                         <li key={subtopic}>{subtopic}</li>
-                      )) ?? <li>No subtopics found.</li>}
+                      ))}
                     </ul>
                   </AccordionContent>
                 </AccordionItem>

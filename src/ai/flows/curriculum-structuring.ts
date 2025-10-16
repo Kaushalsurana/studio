@@ -16,18 +16,15 @@ const CurriculumStructuringInputSchema = z.object({
 });
 export type CurriculumStructuringInput = z.infer<typeof CurriculumStructuringInputSchema>;
 
-const SubtopicSchema = z.object({
-  topic: z.string().describe('A main topic from the syllabus.'),
-  subtopics: z.array(z.string()).describe('An array of subtopics for the given main topic.'),
+const ChapterSchema = z.object({
+  chapter_title: z.string().describe('The title of the chapter.'),
+  subtopics: z.array(z.string()).describe('An array of subtopics for the given chapter.'),
 });
 
 const CurriculumStructuringOutputSchema = z.object({
-  topics: z
-    .array(z.string())
-    .describe('An array of the main topics extracted from the syllabus, in a logical order.'),
-  subtopics: z
-    .array(SubtopicSchema)
-    .describe('A list of topics and their corresponding subtopics.'),
+  chapters: z
+    .array(ChapterSchema)
+    .describe('An array of chapters, each with a title and a list of subtopics.'),
 });
 export type CurriculumStructuringOutput = z.infer<typeof CurriculumStructuringOutputSchema>;
 
@@ -41,12 +38,11 @@ const prompt = ai.definePrompt({
   output: {schema: CurriculumStructuringOutputSchema},
   prompt: `You are an expert curriculum designer specializing in science education.
 
-You will receive the content of a science syllabus and extract the main topics and subtopics.
+You will receive the content of a science syllabus and extract the chapters and their subtopics.
 
 Syllabus Content: {{{syllabusText}}}
 
-Return the main topics as an array of strings in a logical order.
-For each main topic, extract the subtopics and return them as an array of objects, where each object contains the main topic and a list of its subtopics.
+Return the curriculum structure as an array of chapters. Each chapter should have a title and a list of its subtopics.
 `,
 });
 

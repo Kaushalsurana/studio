@@ -3,7 +3,7 @@
 import { createContext, useState, useEffect, useCallback, ReactNode } from 'react';
 import type { BookCreationState, BookCreationContextType, ContentItem, EditorialGuidelines } from '@/lib/types';
 import type { CurriculumStructuringOutput } from '@/ai/flows/curriculum-structuring';
-import type { ChapterStructuringOutput } from '@/ai/flows/chapter-structuring';
+import type { BookStructuringOutput } from '@/ai/flows/book-structuring';
 import type { QuestionGenerationOutput } from '@/ai/flows/question-generation';
 
 const initialState: BookCreationState = {
@@ -75,13 +75,12 @@ export function BookCreationProvider({ children }: { children: ReactNode }) {
     }));
   }, []);
   
-  const approveAllContent = useCallback(() => {
-    if(!state.curriculum) return false;
-    const allTopics = state.curriculum.topics;
-    return allTopics.every(topic => state.content[topic]?.status === 'approved');
+  const approveAllContent = useCallback((allSubtopics: string[]) => {
+    if (!state.curriculum) return false;
+    return allSubtopics.every(subtopic => state.content[subtopic]?.status === 'approved');
   }, [state.curriculum, state.content]);
 
-  const setChapters = useCallback((chapters: ChapterStructuringOutput['chapters'] | null) => {
+  const setChapters = useCallback((chapters: BookStructuringOutput['chapters'] | null) => {
     setState(prevState => ({ ...prevState, chapters }));
   }, []);
 

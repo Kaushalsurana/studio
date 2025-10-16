@@ -1,37 +1,37 @@
-import type { CurriculumStructuringOutput } from "@/ai/flows/curriculum-structuring";
-import type { ChapterStructuringOutput } from "@/ai/flows/chapter-structuring";
-import type { QuestionGenerationOutput } from "@/ai/flows/question-generation";
+import type { CurriculumStructuringOutput } from './ai/flows/curriculum-structuring';
+import type { BookStructuringOutput } from './ai/flows/book-structuring';
+import type { QuestionGenerationOutput } from './ai/flows/question-generation';
 
-export type EditorialGuidelines = {
+export interface EditorialGuidelines {
   writingStyle: string;
   targetAudience: string;
-};
+}
 
-export type ContentItem = {
+export interface ContentItem {
   content: string;
   status: 'pending' | 'generated' | 'approved';
-};
+}
 
-export type BookCreationState = {
+export interface BookCreationState {
   currentStep: number;
   syllabusText: string;
   curriculum: CurriculumStructuringOutput | null;
   editorialGuidelines: EditorialGuidelines;
   content: Record<string, ContentItem>;
-  chapters: ChapterStructuringOutput['chapters'] | null;
+  chapters: BookStructuringOutput['chapters'] | null;
   questions: Record<string, QuestionGenerationOutput['questions']>;
   visuals: Record<string, string>;
-};
+}
 
-export type BookCreationContextType = BookCreationState & {
+export interface BookCreationContextType extends BookCreationState {
+  goToStep: (step: number) => void;
+  reset: () => void;
   setSyllabusText: (text: string) => void;
   setCurriculum: (curriculum: CurriculumStructuringOutput | null) => void;
   setEditorialGuidelines: (guidelines: EditorialGuidelines) => void;
   setContent: (topic: string, contentItem: ContentItem) => void;
-  setChapters: (chapters: ChapterStructuringOutput['chapters'] | null) => void;
+  approveAllContent: (allSubtopics: string[]) => boolean;
+  setChapters: (chapters: BookStructuringOutput['chapters'] | null) => void;
   setQuestions: (chapterTitle: string, questions: QuestionGenerationOutput['questions']) => void;
   setVisuals: (chapterTitle: string, visualNotes: string) => void;
-  goToStep: (step: number) => void;
-  reset: () => void;
-  approveAllContent: () => boolean;
-};
+}

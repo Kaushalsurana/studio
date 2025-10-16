@@ -7,7 +7,7 @@ import { BookText, BotMessageSquare, PencilRuler, ClipboardEdit, BrainCircuit, F
 import Step1CurriculumStructure from '@/components/steps/Step1CurriculumStructure';
 import Step2EditorialGuidelines from '@/components/steps/Step2EditorialGuidelines';
 import Step3ContentGeneration from '@/components/steps/Step3ContentGeneration';
-import Step4ChapterStructure from '@/components/steps/Step4ChapterStructure';
+import Step4ChapterReview from '@/components/steps/Step4ChapterReview';
 import Step5QuestionGeneration from '@/components/steps/Step5QuestionGeneration';
 import Step6VisualPlanning from '@/components/steps/Step6VisualPlanning';
 import Step7Export from '@/components/steps/Step7Export';
@@ -17,7 +17,7 @@ const steps = [
   { id: 1, name: 'Curriculum Structure', icon: BotMessageSquare },
   { id: 2, name: 'Editorial Guidelines', icon: ClipboardEdit },
   { id: 3, name: 'Content Generation', icon: BrainCircuit },
-  { id: 4, name: 'Chapter Structure', icon: BookText },
+  { id: 4, name: 'Chapter Review', icon: BookText },
   { id: 5, name: 'Practice Questions', icon: PencilRuler },
   { id: 6, name: 'Visual Planning', icon: FileImage },
   { id: 7, name: 'Review & Export', icon: Download },
@@ -31,7 +31,7 @@ function AppContent() {
       case 1: return <Step1CurriculumStructure />;
       case 2: return <Step2EditorialGuidelines />;
       case 3: return <Step3ContentGeneration />;
-      case 4: return <Step4ChapterStructure />;
+      case 4: return <Step4ChapterReview />;
       case 5: return <Step5QuestionGeneration />;
       case 6: return <Step6VisualPlanning />;
       case 7: return <Step7Export />;
